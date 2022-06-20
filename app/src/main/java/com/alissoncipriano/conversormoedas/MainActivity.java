@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewHolder mViewHolder = new ViewHolder();
@@ -35,8 +36,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //      Verifica se quem chamou o método de Click foi o botão Calcular
         if (v.getId() == R.id.button_calculate) {
 //          Lógica
-            this.mViewHolder.textDollar.setText("Olá, mundo!");
+            String value = this.mViewHolder.editValue.getText().toString();
+
+            if ("".equals(value)) {
+//            O input obrigatório está vazio
+                Toast.makeText(this, R.string.informe_valor, Toast.LENGTH_LONG).show();
+            }
+            else {
+                Double real = Double.valueOf(value);
+
+                this.mViewHolder.textDollar.setText(String.format("%.2f", (real / 4)));
+                this.mViewHolder.textEuro.setText(String.format("%.2f", (real / 5)));
+            }
         }
+    }
+
+    private void clearValues() {
+        this.mViewHolder.textDollar.setText("");
+        this.mViewHolder.textEuro.setText("");
     }
 
     private static class ViewHolder {
